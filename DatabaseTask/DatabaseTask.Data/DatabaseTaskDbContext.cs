@@ -1,16 +1,17 @@
 ﻿using DatabaseTask.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 
+namespace DatabaseTask.Data;
 
-namespace DatabaseTask.Data
+public class DatabaseTaskDbContext : DbContext
 {
-    public class DatabaseTaskDbContext : DbContext
+    public DatabaseTaskDbContext(DbContextOptions<DatabaseTaskDbContext> options)
+        : base(options)
     {
-        public DatabaseTaskDbContext(DbContextOptions<DatabaseTaskDbContext> options)
-            : base(options) { }
-
-        // näide, kuidas teha, kui lisate domaini alla ühe objekti
-        // migratsioonid peavad tulema siia libary-sse e TARge20.Data alla.
-        public DbSet<Employee> Employee { get; set; }
     }
+
+    // Keep the existing table name because it is already represented by the initial migration.
+    public DbSet<Employee> Employee => Set<Employee>();
+
+    public DbSet<Child> Children => Set<Child>();
 }
